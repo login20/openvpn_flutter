@@ -57,6 +57,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> initPlatformState() async {
     engine.connect(
+      "www.baidu.com",
       config,
       "USA",
       username: defaultVpnUsername,
