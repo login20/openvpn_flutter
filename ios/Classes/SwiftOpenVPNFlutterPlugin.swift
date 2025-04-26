@@ -73,6 +73,7 @@ public class SwiftOpenVPNFlutterPlugin: NSObject, FlutterPlugin {
                                         message: "VPNEngine need to be initialize",
                                         details: nil));
                 }
+                let host: String? = (call.arguments as? [String : Any])? ["host"] as? String
                 let config: String? = (call.arguments as? [String : Any])? ["config"] as? String
                 let username: String? = (call.arguments as? [String : Any])? ["username"] as? String
                 let password: String? = (call.arguments as? [String : Any])? ["password"] as? String
@@ -83,7 +84,7 @@ public class SwiftOpenVPNFlutterPlugin: NSObject, FlutterPlugin {
                     return
                 }
                 
-                SwiftOpenVPNFlutterPlugin.utils.configureVPN(config: config, username: username, password: password, completion: {(success:Error?) -> Void in
+                SwiftOpenVPNFlutterPlugin.utils.configureVPN(host: host, config: config, username: username, password: password, completion: {(success:Error?) -> Void in
                     if(success == nil){
                         result(nil)
                     }else{
@@ -194,7 +195,7 @@ class VPNUtils {
         }
     }
     
-    func configureVPN(config: String?, username : String?,password : String?,completion:@escaping (_ error : Error?) -> Void) {
+    func configureVPN(host: String?, config: String?, username : String?,password : String?,completion:@escaping (_ error : Error?) -> Void) {
         let configData = config
         self.providerManager?.loadFromPreferences { error in
             if error == nil {
