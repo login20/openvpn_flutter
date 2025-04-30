@@ -88,6 +88,7 @@ class OpenVPN {
     String? providerBundleIdentifier,
     String? localizedDescription,
     String? groupIdentifier,
+    String? privatePass,
     Function(VpnStatus status)? lastStatus,
     Function(VPNStage stage)? lastStage,
   }) async {
@@ -105,6 +106,7 @@ class OpenVPN {
       "groupIdentifier": groupIdentifier,
       "providerBundleIdentifier": providerBundleIdentifier,
       "localizedDescription": localizedDescription,
+      "privatePass": privatePass,
     }).then((value) {
       Future.wait([
         status().then((value) => lastStatus?.call(value)),
@@ -129,7 +131,7 @@ class OpenVPN {
   ///username & password : set your username and password if your config file has auth-user-pass
   ///
   ///bypassPackages : exclude some apps to access/use the VPN Connection, it was List<String> of applications package's name (Android Only)
-  Future connect(String host,String config, String name,
+  Future connect(String host, String config, String name,
       {String? username,
       String? password,
       List<String>? bypassPackages,
@@ -140,7 +142,7 @@ class OpenVPN {
 
     try {
       return _channelControl.invokeMethod("connect", {
-        "host" : host,
+        "host": host,
         "config": config,
         "name": name,
         "username": username,
